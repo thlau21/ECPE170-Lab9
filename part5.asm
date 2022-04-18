@@ -11,17 +11,17 @@
 main:
 	la $s0, string #load address of string buffer
 
-	li $v0, 8 #sets $v0 to 12 to select read char
+	li $v0, 8 #sets $v0 to 8 to select read string
 	la $a0, string #prepares argument for where to store what syscall reads
 	li $a1, 256 #max character argument will take
 	syscall
 
-	lb $t0, 0($s0)#t0 = string[i]
-
 while: 
+	lb $t0, 0($s0)#t0 = string[i]
 	beq $t0, 0, notFound #e not found in whole string
 	beq $t0, 101, found #string[i] == 'e'
 	addi $s0, $s0, 1 #address + 1
+	j while
 
 notFound:
 	li $v0, 4 #sets v0 to 4 to print string
